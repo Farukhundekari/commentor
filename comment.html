@@ -1,158 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enterprise Dashboard</title>
-    <link rel="stylesheet" href="comment.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="tarrifinput">
-        <input
-          type="text"
-          id="tarrifinput"
-          placeholder="Search Tarrif product..."
-        />
-      </div>
-      <div id="results" class="results"></div>
-      <nav class="tabs">
-        <a class="tab" href="index.html">Checklist</a>
-        <a class="tab orange" href="comment.html">Comment Generator</a>
-        <a class="tab">PGA Code Guide</a>
-        <a class="tab">USMCA</a>
-        <!-- <a class="tab">Consignee - PWDBW</a> -->
-        <a class="tab">Personal Use</a>
-        <!-- <a class="tab">Manufacturer - PWDBW</a> -->
-      </nav>
-      <button class="tab orange" onclick="openDrawer()">Activity Log</button>
-    </header>
 
-    <section class="cards">
-      <div class="card">
-        <h3><i data-lucide="truck"></i class='ri-information-line'> Completed Shipments</h3>
-        
-        <input
-          placeholder="Enter shipment entry number"
-          type="number"
-          id="input75"
-        />
-        <div class="button-group">
-          <button id="commentSeven">7501 Comment</button>
-          <div id="preview7501"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Dashboard</title>
+  <link rel="stylesheet" href="comment.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-          <input
-            placeholder="Enter W-Bill number"
-            id="indexShips"
-            type="number"
-          />
-          <button id="indexComplete">Index comment</button>
-          <div id="previewIndex"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="hash"></i> HS Code Modifier</h3>
-        <input id="input" type="number" placeholder="Enter HS code..." />
-        <button id="submit">Generate</button>
-        <h3 id="Hscode">HTS CODE :</h3>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="message-square"></i> Indexing Review Comment</h3>
-        <select id="deptTwo">
-          <option>Department</option>
-          <option>Database Administration</option>
-          <option>Application Support</option>
-          <option>Customer Service</option>
-          <option>Infrastructure Team</option>
-        </select>
-
-        <select id="taskTwo">
-          <option>Task</option>
-          <option>System Health Check</option>
-          <option>Ticket Resolution</option>
-          <option>Incident Logging</option>
-          <option>Server Patching</option>
-        </select>
-
-        <input type="text" placeholder="Add Comment" id="addComment" />
-        <button id="btn-raviewTwo">Generate</button>
-        <div id="preview"></div>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="file-text"></i> 7501 Review Comment</h3>
-        <select id="dept">
-          <option value="">Select Department</option>
-          <option value="Department1">Department1</option>
-          <option value="Department2">Department2</option>
-          <option value="Department3">Department3</option>
-          <option value="Department4">Department4</option>
-        </select>
-
-        <select id="task"></select>
-
-        <input type="text" placeholder="Additional Comment" id="add-comment" />
-        <button id="review7501">Copy Items</button>
-        <pre id="debug"></pre>
-        <div id="output"></div>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="clipboard-list"></i> Counter Tracker</h3>
-        <div id="counter">Copied: 0 times</div>
-        <input id="editInput" type="number" placeholder="Count" />
-        <button id="edit">Set</button>
-        <button id="reset">Reset</button>
-        <button id="decrement">Decrement</button>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="database"></i> Hold Shipment Number</h3>
-        <input id="entry-input" type="number" placeholder="Enter Entry No..." />
-        <button id="proc-comment">7501</button>
-        <div id="previewHold"></div>
-      </div>
-
-      <div class="card">
-        <h3><i data-lucide="calculator"></i> Unit Conversion</h3>
-        <input type="number" placeholder="Enter Amount" id="unitInput" />
-        <button id="getDozen">Get Dozen</button>
-        <div id="previewDozen"></div>
-        <button id="getGross">Get Gross</button>
-        <div id="previewGross"></div>
-      </div>
-
-      <!-- <div class="card">
-        <h3><i data-lucide="user-check"></i> User Login Hours</h3>
-        <input placeholder="Fetch user login hrs..." />
-        <button>Get Data</button>
-        <button>Show Graph</button>
-      </div> -->
-    </section>
-    <!-- Drawer Overlay -->
-    <div class="drawer-overlay" id="drawerOverlay"></div>
-
-    <!-- Right Drawer -->
-    <!-- Right Drawer -->
-    <div class="drawer" id="activityDrawer">
-      <span class="close-drawer" onclick="closeDrawer()">✕</span>
-
-      <!-- Keep only one heading -->
-      <h3>Activity Log </h3><button id="resetActivity">Reset</button>
-
-      <div id="activitySummary">Total Actions: 0</div>
-      <div id="actionLog" class="action-log"></div>
-
-      <div id="drawerContent"></div>
+<body>
+  <header class="topbar">
+    <div class="tarrifinput">
+      <input type="text" id="tarrifinput" placeholder="Search Product Tarrif..." />
     </div>
 
-    <!-- <script>
+    <div id="results" class="results"></div>
+    <nav class="tabs">
+      <a class="tab" href="index.html">Checklist</a>
+      <a class="tab orange" href="comment.html">Comment Generator</a>
+      <a class="tab">PGA Code Guide</a>
+      <a class="tab">USMCA</a>
+      <!-- <a class="tab">Consignee - PWDBW</a> -->
+      <a class="tab">Personal Use</a>
+      <!-- <a class="tab">Manufacturer - PWDBW</a> -->
+        <a class="tab" id="actionLog">Activity Log</a>
+    </nav>
+    <!-- <button class="tab orange" id="actionLog">Activity Log</button> -->
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <h3><i data-lucide="truck"></i class='ri-information-line'> Completed Shipments</h3>
+
+      <input placeholder="Enter shipment entry number" type="number" id="input75" />
+      <div class="button-group">
+        <button id="commentSeven">7501 Comment</button>
+        <div id="preview7501"></div>
+
+        <input placeholder="Enter W-Bill number" id="indexShips" type="number" />
+        <button id="indexComplete">Index comment</button>
+        <div id="previewIndex"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="hash"></i> HS Code Modifier</h3>
+      <input id="input" type="number" placeholder="Enter HS code..." />
+      <button id="submit">Generate</button>
+      <h3 id="Hscode">HTS CODE :</h3>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="message-square"></i> Indexing Review Comment</h3>
+      <select id="deptTwo">
+        <option>Department</option>
+        <option>Database Administration</option>
+        <option>Application Support</option>
+        <option>Customer Service</option>
+        <option>Infrastructure Team</option>
+      </select>
+
+      <select id="taskTwo">
+        <option>Task</option>
+        <option>System Health Check</option>
+        <option>Ticket Resolution</option>
+        <option>Incident Logging</option>
+        <option>Server Patching</option>
+      </select>
+
+      <input type="text" placeholder="Add Comment" id="addComment" />
+      <button id="btn-raviewTwo">Generate</button>
+      <div id="preview"></div>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="file-text"></i> 7501 Review Comment</h3>
+      <select id="dept">
+        <option value="">Select Department</option>
+        <option value="Department1">Department1</option>
+        <option value="Department2">Department2</option>
+        <option value="Department3">Department3</option>
+        <option value="Department4">Department4</option>
+      </select>
+
+      <select id="task"></select>
+
+      <input type="text" placeholder="Additional Comment" id="add-comment" />
+      <button id="review7501">Copy Items</button>
+      <pre id="debug"></pre>
+      <div id="output"></div>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="clipboard-list"></i> Counter Tracker</h3>
+      <div id="counter">Copied: 0 times</div>
+      <input id="editInput" type="number" placeholder="Count" />
+      <button id="edit">Set</button>
+      <button id="reset">Reset</button>
+      <button id="decrement">Decrement</button>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="database"></i> Hold Shipment Number</h3>
+      <input id="entry-input" type="number" placeholder="Enter Entry No..." />
+      <button id="proc-comment">7501</button>
+      <div id="previewHold"></div>
+    </div>
+
+    <div class="card">
+      <h3><i data-lucide="calculator"></i> Unit Conversion</h3>
+      <input type="number" placeholder="Enter Amount" id="unitInput" />
+      <button id="getDozen">Get Dozen</button>
+      <div id="previewDozen"></div>
+      <button id="getGross">Get Gross</button>
+      <div id="previewGross"></div>
+    </div>
+
+  </section>
+  <!-- Drawer Panel for Activity Logs -->
+  <div id="activityDrawer" class="drawer">
+    <div class="drawer-header">
+      <h4>Activity Logs</h4>
+
+      <button id="resetLogsBtn">Reset</button> <button id="closeDrawer">X</button>
+    </div>
+
+    <div id="activitySummary"></div>
+    <div id="logsContainer"></div>
+  </div>
+
+
+  <!-- <script>
       lucide.createIcons();
     </script> -->
-    <script src="comment.js"></script>
-  </body>
+  <script src="comment.js"></script>
+</body>
+
 </html>
