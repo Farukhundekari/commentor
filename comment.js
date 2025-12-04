@@ -331,8 +331,8 @@ Review7501.addEventListener("click", async () => {
 
 /////////////////////////////////////////////////////////
 function renderLogs() {
-  const logscontainer = document.getElementById("actionLog");
-  logscontainer.innerHTML = ""; // clear old logs
+  const logscontainer = document.getElementById("logsContainer");
+  logscontainer.innerHTML = "";
 
   logs.forEach((item, index) => {
     const renderDiv = document.createElement("div");
@@ -365,83 +365,42 @@ document.getElementById("actionLog").addEventListener("click", function (e) {
     renderLogs();
   }
 });
+/////Reset Button activity ////////////////
+const drawer = document.getElementById("activityDrawer");
+const openBtn = document.getElementById("actionLog");
+const closeBtn = document.getElementById("closeDrawer");
 
-const resetActivity = document.getElementById("resetActivity");
-
-resetActivity.addEventListener("click", function () {
-  localStorage.removeItem("inputLogs");
-  console.log("click");
-  Alllogs = [];
+openBtn.addEventListener("click", () => {
+  drawer.classList.add("open");
   renderLogs();
 });
 
-////////////////////// ODD EVEN NUMBERS ////////////////////////////
+closeBtn.addEventListener("click", () => {
+  drawer.classList.remove("open");
+});
+document
+  .getElementById("logsContainer")
+  .addEventListener("click", function (e) {
+    if (e.target.classList.contains("delete-btn")) {
+      const index = e.target.dataset.index;
+      logs.splice(index, 1);
+      localStorage.setItem("inputLogs", JSON.stringify(logs));
+      renderLogs();
+    }
+  });
 
-const greetMassge = () => {
-  console.log("hello world");
-};
+const resetActivity = document.getElementById("resetLogsBtn");
 
-greetMassge();
-
-const calAge = (ageyear, year) => {
-  const ageOfUser = year - ageyear;
-  console.log(ageOfUser);
-};
-
-calAge(2021, 2025);
-
-const getBio = (name, prof, organization, city) => {
-  return `Hello, I'm ${name}. I am working as ${prof} in ${organization},${city}`;
-};
-console.log(getBio("faruk ", "dataAnalist", "tcs ", "pune"));
-
-const calculate = (x, y) => {
-  const c = x + y;
-  const d = c + x + y;
-  console.log(d);
-  innerfun = (amt) => {
-    console.log(amt + d);
-  };
-  return innerfun;
-};
-
-const funn = calculate(4, 5);
-funn(3);
-
-const calculateFullAmount = (type, amount) => {
-  let getPercent = 0.5;
-
-  if (type === "food") {
-    getPercent = 10;
-  }
-  if (type === "jwellary") {
-    getPercent = 18;
-  }
-  if (type === "basicItem") {
-    getPercent = 3;
-  }
-
-  const getGSTAmount = () => {
-    return amount * (getPercent / 100);
-  };
-
-  const getFinalAmout = () => {
-    return amount + getGSTAmount();
-  };
-  return getFinalAmout();
-};
-
-const biscuit = calculateFullAmount("food", 15000);
-const salt = calculateFullAmount("basicItem", 1000);
-const cloths = calculateFullAmount("", 10500);
-const jwellary = calculateFullAmount("jwellary", 100000);
-
-console.log(
-  biscuit.toFixed(),
-  salt.toFixed(),
-  cloths.toFixed(),
-  jwellary.toFixed()
-);
+resetActivity.addEventListener("click", function () {
+  const confirmReset = confirm(
+    "Are you sure you want to clear all activity logs?"
+  );
+  if (!confirmReset) return;
+  // localStorage.removeItem("inputLogs");
+  logs = [];
+  renderLogs();
+  console.log("look");
+});
 
 const departmentTasks = {
   Department1: ["Task1", "Task2", "Task4", "Task3"],
@@ -493,7 +452,7 @@ fetch("tariffData.json")
         div.textContent = `${item.description} - ${item.hts_code}`;
 
         div.addEventListener("click", () => {
-          tarrifinput.value = item.description;
+          tarrifinput.value = `${item.description} - ${item.hts_code}`;
           const hts = item.hts_code;
           navigator.clipboard.writeText(hts);
           resultsContainer.innerHTML = "";
@@ -505,6 +464,8 @@ fetch("tariffData.json")
     document.addEventListener("click", (e) => {
       if (!resultsContainer.contains(e.target) && e.target !== tarrifinput) {
         resultsContainer.innerHTML = "";
+      } else {
+        tarrifinput.value = "";
       }
     });
   });
@@ -516,39 +477,70 @@ document.querySelectorAll(".tab").forEach((tab) => {
   }
 });
 
-// Activity Log dropdown toggle
-const activityBtn = document.getElementById("activityBtn");
-const activityDropdown = document.getElementById("activityDropdown");
+////////////////////// ODD EVEN NUMBERS ////////////////////////////
 
-activityBtn.addEventListener("click", () => {
-  activityDropdown.style.display =
-    activityDropdown.style.display === "block" ? "none" : "block";
-});
+// const greetMassge = () => {
+//   console.log("hello world");
+// };
 
-document.addEventListener("click", (e) => {
-  if (!activityBtn.contains(e.target) && !activityDropdown.contains(e.target)) {
-    activityDropdown.style.display = "none";
-  }
-});
+// greetMassge();
 
-// ✅ FIXED — Drawer will now load ALL logs safely
-function openDrawer() {
-  document.getElementById("drawerOverlay").classList.add("show");
-  document.getElementById("activityDrawer").classList.add("open");
+// const calAge = (ageyear, year) => {
+//   const ageOfUser = year - ageyear;
+//   console.log(ageOfUser);
+// };
 
-  const drawer = document.getElementById("drawerContent");
-  drawer.innerHTML = "";
+// calAge(2021, 2025);
 
-  const allLogs = document.querySelectorAll(".logs-renders");
+// const getBio = (name, prof, organization, city) => {
+//   return `Hello, I'm ${name}. I am working as ${prof} in ${organization},${city}`;
+// };
+// console.log(getBio("faruk ", "dataAnalist", "tcs ", "pune"));
 
-  allLogs.forEach((log) => {
-    drawer.appendChild(log.cloneNode(true));
-  });
-}
+// const calculate = (x, y) => {
+//   const c = x + y;
+//   const d = c + x + y;
+//   console.log(d);
+//   innerfun = (amt) => {
+//     console.log(amt + d);
+//   };
+//   return innerfun;
+// };
 
-function closeDrawer() {
-  document.getElementById("drawerOverlay").classList.remove("show");
-  document.getElementById("activityDrawer").classList.remove("open");
-}
+// const funn = calculate(4, 5);
+// funn(3);
 
-document.getElementById("drawerOverlay").onclick = closeDrawer;
+// const calculateFullAmount = (type, amount) => {
+//   let getPercent = 0.5;
+
+//   if (type === "food") {
+//     getPercent = 10;
+//   }
+//   if (type === "jwellary") {
+//     getPercent = 18;
+//   }
+//   if (type === "basicItem") {
+//     getPercent = 3;
+//   }
+
+//   const getGSTAmount = () => {
+//     return amount * (getPercent / 100);
+//   };
+
+//   const getFinalAmout = () => {
+//     return amount + getGSTAmount();
+//   };
+//   return getFinalAmout();
+// };
+
+// const biscuit = calculateFullAmount("food", 15000);
+// const salt = calculateFullAmount("basicItem", 1000);
+// const cloths = calculateFullAmount("", 10500);
+// const jwellary = calculateFullAmount("jwellary", 100000);
+
+// console.log(
+//   biscuit.toFixed(),
+//   salt.toFixed(),
+//   cloths.toFixed(),
+//   jwellary.toFixed()
+// );
