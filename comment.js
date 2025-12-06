@@ -174,7 +174,7 @@ indexComplete.addEventListener("click", async () => {
   const log = {
     date: formatted,
     action: text,
-    waight: 0.25,
+    waight: 1,
   };
   logs.push(log);
 
@@ -280,7 +280,7 @@ indexReview.addEventListener("click", async () => {
   const log = {
     date: formatted,
     action: finalselect,
-    waight: 0.25,
+    waight: 1,
   };
   console.log(log);
   logs.push(log);
